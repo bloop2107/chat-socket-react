@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import queryString from 'query-string';
 import io from 'socket.io-client';
+import Chatbox from './Chatbox';
+import Input from './Input';
+import Messages from './Messages';
 
 let socket;
 
@@ -21,7 +24,8 @@ const Chat = ({location}) => {
             transports: ['websocket']
         });
 
-        socket.emit('join', { name,room }, () => {
+        socket.emit('join', { name,room }, (res) => {
+            console.log(res);
         });
 
         
@@ -51,19 +55,19 @@ const Chat = ({location}) => {
         if(message){
             socket.emit('sendMessage',message, (res) => {
                 setMessage('');
+                console.log(res);
             })
         }
     }
 
-    // console.log(message,messages);
+    // console.log(socket);
+    console.log(message,messages);
 
     return (
-        <div>
-            <input 
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                onKeyPress={(e) => e.key === 'Enter' ? sendMessage(e) : null }
-            />
+        <div className="container">
+            <Chatbox name={name} room={room} />
+            <Messages  messages={messages} name={name} />
+            <Input message={message} setMessage={setMessage} sendMessage={sendMessage} />
         </div>
     )
 }
