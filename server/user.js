@@ -21,16 +21,18 @@ const addUser = ({id, name, room}) => {
 
 const removeUser = ({id}) => {
 
-    const index = users.findIndex((user) => user.id === id);
+    const index = users.findIndex((id) => id === id);
 
     if(index !== -1){
         return users.splice(index, 1)[0];
     }
+
+    return users;
 }
 
 const getUser = (id) => {
-    const user = users.find((user) => user.id === id)
-    return user;
+    const user = users.find((id) => id === id)
+    return user
 }
 
 const getUserInRoom = () => {

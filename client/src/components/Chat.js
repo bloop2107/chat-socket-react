@@ -61,7 +61,7 @@ const Chat = ({location}) => {
     }
 
     // console.log(socket);
-    console.log(message,messages);
+    // console.log(message,messages);
 
     return (
         <div className="container">
