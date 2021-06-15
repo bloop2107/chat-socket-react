@@ -12,7 +12,7 @@ const app = express();
 const server = http.createServer(app);
 
 app.use(router);
-app.use(cors);
+app.use(cors());
 
 const io = socketio(server);
 
@@ -31,8 +31,8 @@ io.on('connection',(socket) => {
 
         socket.join(user.room);
 
-        console.log(user,socket.id);
-    
+        io.to(user.room).emit('roomData',{room: user.rom,users: getUserInRoom(user.room)});
+
         callback();
     })
 
@@ -40,16 +40,13 @@ io.on('connection',(socket) => {
         const user = getUser(socket.id);
 
         io.to(user.room).emit('message', { user: user.name, text: message }) 
-
+        io.to(user.room).emit('roomData', { room: user.room, users: getUserInRoom(user.room) }) 
         callback();
     })
 
 
     socket.on('disconnect', () => {
         const user = removeUser(socket.id);
-
-        console.log('User had left');
-        console.log(user,socket.id);
 
         if(user){
             io.to(user.room).emit('message',{user: 'admin', text: `${user.name} has left`});

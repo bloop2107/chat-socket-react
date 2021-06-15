@@ -13,14 +13,14 @@ const Chat = ({location}) => {
     const [message,setMessage] = useState('');
     const [messages,setMessages] = useState([]);
 
-    const ENDPOINT = 'http://127.0.0.1:5000/';
+    const ENDPOINT = 'https://chat-app-react-pain-maker.herokuapp.com/';
 
     
 
     useEffect(() => {
         const {name,room} = queryString.parse(location.search); 
 
-        socket = io('http://127.0.0.1:5000/',{
+        socket = io('https://chat-app-react-pain-maker.herokuapp.com/',{
             transports: ['websocket']
         });
 
